@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { renderers } from "./renderers.js";
+import { renderers } from "./core/renderers.js";
 
 export async function build({ pagePath, layoutPath, tokensPath, themePath, outDir }) {
   const page = JSON.parse(fs.readFileSync(pagePath, "utf8"));
