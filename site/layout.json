@@ -1,0 +1,7 @@
+{
+  "regions": {
+    "header": { "slots": ["nav"] },
+    "main":   { "slots": ["hero","content","sidebar"] },
+    "footer": { "slots": ["cta","legal"] }
+  }
+}

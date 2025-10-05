@@ -1,0 +1,11 @@
+{
+  "$id": "Nav@v1",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "label": { "type": "string" }, "href": { "type": "string" } }, "required": ["label","href"] }
+    }
+  },
+  "required": ["items"]
+}

@@ -1,0 +1,11 @@
+{
+  "$id": "Media@v1",
+  "type": "object",
+  "properties": {
+    "src": { "type": "string" },
+    "alt": { "type": "string" },
+    "width": { "type": "number" },
+    "height": { "type": "number" }
+  },
+  "required": ["src"]
+}

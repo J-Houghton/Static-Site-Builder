@@ -1,0 +1,27 @@
+@layer reset, base, components, utilities;
+
+@layer reset {
+  *,*::before,*::after{box-sizing:border-box}
+  body, h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+  ul,ol{padding:0; list-style:none}
+}
+
+@layer base {
+  body{font-family:var(--font); color:var(--fg); background:var(--bg); line-height:1.5}
+  header,main,footer{max-width:72rem; margin:0 auto; padding:var(--space-8) var(--space-4)}
+}
+
+@layer components {
+  .slot{margin-bottom:var(--space-6)}
+  .c-text{max-width:65ch}
+  .c-media{display:block; max-width:100%; height:auto; border-radius:var(--radius-2)}
+  .c-nav ul{display:flex; gap:var(--space-4); flex-wrap:wrap}
+  .c-nav a{text-decoration:none; color:var(--fg); padding:var(--space-2) var(--space-3); border-radius:var(--radius-1)}
+  .c-nav a:hover{background:color-mix(in oklab, var(--brand) 12%, white)}
+  .c-label{display:block; font-size:.875rem; color:var(--muted); margin-bottom:var(--space-1)}
+  .c-input{display:block; width:100%; padding:var(--space-3) var(--space-4); border:1px solid #e5e7eb; border-radius:var(--radius-2)}
+}
+
+@layer utilities {
+  .hero{padding:var(--space-8); background:color-mix(in oklab, var(--brand) 8%, white); border-radius:var(--radius-3)}
+}

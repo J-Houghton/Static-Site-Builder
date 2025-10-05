@@ -1,0 +1,23 @@
+{
+  "$id": "Layout@v1",
+  "type": "object",
+  "properties": {
+    "regions": {
+      "type": "object",
+      "properties": {
+        "header": { "$ref": "#/$defs/region" },
+        "main":   { "$ref": "#/$defs/region" },
+        "footer": { "$ref": "#/$defs/region" }
+      },
+      "required": ["header","main","footer"]
+    }
+  },
+  "required": ["regions"],
+  "$defs": {
+    "region": {
+      "type": "object",
+      "properties": { "slots": { "type": "array", "items": { "type": "string" } } },
+      "required": ["slots"]
+    }
+  }
+}

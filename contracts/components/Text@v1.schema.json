@@ -1,0 +1,9 @@
+{
+  "$id": "Text@v1",
+  "type": "object",
+  "properties": {
+    "text": { "type": "string" },
+    "as": { "type": "string", "enum": ["p","h1","h2","h3","h4","h5","h6","small","blockquote"] }
+  },
+  "required": ["text"]
+}

@@ -1,0 +1,24 @@
+{
+  "title": "MVP Home",
+  "regions": {
+    "header": {
+      "nav": { "type": "Nav@v1", "props": { "items": [
+        { "label": "Home", "href": "/" },
+        { "label": "Docs", "href": "/docs" },
+        { "label": "Contact", "href": "/contact" }
+      ] } }
+    },
+    "main": {
+      "hero": { "type": "Text@v1", "props": { "as": "h1", "text": "Static Site Builder MVP" } },
+      "content": [
+        { "type": "Text@v1", "props": { "text": "This page was generated from contracts via CLI." } },
+        { "type": "Media@v1", "props": { "src": "/images/hero.jpg", "alt": "Hero image" } },
+        { "type": "Input@v1", "props": { "name": "email", "type": "email", "label": "Join updates", "placeholder": "you@example.com" } }
+      ]
+    },
+    "footer": {
+      "cta":   { "type": "Text@v1", "props": { "as": "h3", "text": "Ready to ship." } },
+      "legal": { "type": "Text@v1", "props": { "as": "small", "text": "© 2025 SSB." } }
+    }
+  }
+}

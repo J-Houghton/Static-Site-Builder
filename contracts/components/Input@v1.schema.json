@@ -1,0 +1,11 @@
+{
+  "$id": "Input@v1",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "type": { "type": "string", "enum": ["text","email","search","tel","url"] },
+    "label": { "type": "string" },
+    "placeholder": { "type": "string" }
+  },
+  "required": ["name","label"]
+}

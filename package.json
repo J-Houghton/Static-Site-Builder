@@ -1,0 +1,7 @@
+{
+  "name": "ssb",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": { "ssb": "./bin/ssb.js" },
+  "scripts": { "build": "node ./bin/ssb.js build ./site/pages/home.json --out ./dist" }
+}
