@@ -3,5 +3,13 @@
   "version": "0.1.0",
   "type": "module",
   "bin": { "ssb": "./bin/ssb.js" },
-  "scripts": { "build": "node ./bin/ssb.js build ./site/pages/home.json --out ./dist" }
+  "scripts": {
+    "build": "node ./bin/ssb.js build ./site/pages/home.json --out ./dist && npm run tw:build",
+    "tw:build": "tailwindcss -c tailwind.config.js -i theme/tw-input.css -o dist/tw.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.14",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47"
+  }
 }

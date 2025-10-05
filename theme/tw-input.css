@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Map tokens to utilities usage via CSS variables */
+:root{
+  /* imported from tokens.css; keep single source of truth by mirroring */
+  --bg:#ffffff; --fg:#111111; --muted:#6b7280; --brand:#0ea5e9;
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-6:1.5rem; --space-8:2rem;
+  --radius-1:.25rem; --radius-2:.5rem; --radius-3:1rem;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+}
+
+/* Keep your existing theme base so non-TW components still look fine */
+@layer base {
+  body{font-family:var(--font); color:var(--fg); background:var(--bg); line-height:1.5}
+}

@@ -6,14 +6,15 @@
         { "label": "Home", "href": "/" },
         { "label": "Docs", "href": "/docs" },
         { "label": "Contact", "href": "/contact" }
-      ] } }
+      ], "tw": "flex gap-4" } }
     },
     "main": {
-      "hero": { "type": "Text@v1", "props": { "as": "h1", "text": "Static Site Builder MVP" } },
+      "_tw": "grid grid-cols-12 gap-8",
+      "hero": { "type": "Text@v1", "props": { "as": "h1", "text": "Static Site Builder MVP", "tw": "col-span-12 md:col-span-8" } },
       "content": [
-        { "type": "Text@v1", "props": { "text": "This page was generated from contracts via CLI." } },
-        { "type": "Media@v1", "props": { "src": "/images/hero.jpg", "alt": "Hero image" } },
-        { "type": "Input@v1", "props": { "name": "email", "type": "email", "label": "Join updates", "placeholder": "you@example.com" } }
+        { "type": "Text@v1", "props": { "text": "This page was generated from contracts via CLI.", "tw": "col-span-12 md:col-span-8" } },
+        { "type": "Media@v1", "props": { "src": "/images/hero.jpg", "alt": "Hero image", "tw": "col-span-12 md:col-span-4 rounded-lg" } },
+        { "type": "Input@v1", "props": { "name": "email", "type": "email", "label": "Join updates", "placeholder": "you@example.com", "tw": "col-span-12 md:col-span-6" }, "_wrapTw": "col-span-12 md:col-span-6" }
       ]
     },
     "footer": {

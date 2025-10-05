@@ -5,7 +5,9 @@
     "src": { "type": "string" },
     "alt": { "type": "string" },
     "width": { "type": "number" },
-    "height": { "type": "number" }
+    "height": { "type": "number" },
+    "tw": { "type": "string" },
+    "class": { "type": "string" }
   },
   "required": ["src"]
 }

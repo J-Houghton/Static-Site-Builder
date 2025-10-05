@@ -5,7 +5,9 @@
     "name": { "type": "string" },
     "type": { "type": "string", "enum": ["text","email","search","tel","url"] },
     "label": { "type": "string" },
-    "placeholder": { "type": "string" }
+    "placeholder": { "type": "string" },
+    "tw": { "type": "string" },
+    "class": { "type": "string" }
   },
   "required": ["name","label"]
 }
