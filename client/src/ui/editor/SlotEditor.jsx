@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FieldEditor, defaultValueForSchema } from "./FieldEditor.jsx";
 
 function createComponent(type, schema, previous = {}) {
@@ -24,6 +24,11 @@ function ComponentEditor({
   const schema = type ? components[type] : null;
   const propsValue = current.props && typeof current.props === "object" ? current.props : {};
   const wrapTw = current._wrapTw || "";
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (!type) setCollapsed(false);
+  }, [type]);
 
   return (
     <div style={styles.component}>
@@ -50,6 +55,15 @@ function ComponentEditor({
             ))}
           </select>
         </label>
+        {type && (
+          <button
+            type="button"
+            onClick={() => setCollapsed((prev) => !prev)}
+            style={styles.toggleButton}
+          >
+            {collapsed ? "Expand" : "Collapse"}
+          </button>
+        )}
         {onRemove && (
           <button
             type="button"
@@ -61,7 +75,7 @@ function ComponentEditor({
         )}
       </div>
 
-      {type && (
+      {type && !collapsed && (
         <div style={styles.componentBody}>
           <label style={styles.label}>
             <span style={styles.labelText}>Wrapper classes (_wrapTw)</span>
@@ -194,7 +208,7 @@ const styles = {
   componentHeader: {
     display: "flex",
     gap: "0.75rem",
-    alignItems: "flex-end",
+    alignItems: "center",
   },
   componentBody: {
     display: "flex",
@@ -226,6 +240,17 @@ const styles = {
     cursor: "pointer",
     fontSize: "0.75rem",
     height: "2.25rem",
+  },
+  toggleButton: {
+    padding: "0.25rem 0.75rem",
+    borderRadius: "9999px",
+    border: "1px solid #d1d5db",
+    background: "#fff",
+    color: "#111827",
+    cursor: "pointer",
+    fontSize: "0.75rem",
+    height: "2.25rem",
+    whiteSpace: "nowrap",
   },
   addButton: {
     alignSelf: "flex-start",

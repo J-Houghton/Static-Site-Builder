@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SlotEditor } from "./SlotEditor.jsx";
 
 export function RegionEditor({
@@ -14,6 +14,7 @@ export function RegionEditor({
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
   const tw = value._tw || "";
+  const [collapsed, setCollapsed] = useState(false);
 
   const handleSlotChange = (slotName, slotValue) => {
     const next = { ...value };
@@ -26,36 +27,45 @@ export function RegionEditor({
     <section style={styles.region}>
       <header style={styles.regionHeader}>
         <h3 style={styles.regionTitle}>{regionTitle}</h3>
+        <button
+          type="button"
+          onClick={() => setCollapsed((prev) => !prev)}
+          style={styles.toggleButton}
+        >
+          {collapsed ? "Expand" : "Collapse"}
+        </button>
       </header>
-      <div style={styles.regionBody}>
-        <label style={styles.label}>
-          <span style={styles.labelText}>Region classes (_tw)</span>
-          <input
-            type="text"
-            value={tw}
-            onChange={(e) => {
-              const val = e.target.value;
-              const next = { ...value };
-              if (val) next._tw = val;
-              else delete next._tw;
-              onChange(next);
-            }}
-            style={styles.input}
-          />
-        </label>
-        <div style={styles.slots}>
-          {slots.map((slot) => (
-            <SlotEditor
-              key={slot}
-              slotName={slot}
-              value={value[slot]}
-              onChange={(slotValue) => handleSlotChange(slot, slotValue)}
-              components={components}
-              componentOptions={componentOptions}
+      {!collapsed && (
+        <div style={styles.regionBody}>
+          <label style={styles.label}>
+            <span style={styles.labelText}>Region classes (_tw)</span>
+            <input
+              type="text"
+              value={tw}
+              onChange={(e) => {
+                const val = e.target.value;
+                const next = { ...value };
+                if (val) next._tw = val;
+                else delete next._tw;
+                onChange(next);
+              }}
+              style={styles.input}
             />
-          ))}
+          </label>
+          <div style={styles.slots}>
+            {slots.map((slot) => (
+              <SlotEditor
+                key={slot}
+                slotName={slot}
+                value={value[slot]}
+                onChange={(slotValue) => handleSlotChange(slot, slotValue)}
+                components={components}
+                componentOptions={componentOptions}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
@@ -73,10 +83,23 @@ const styles = {
     padding: "1rem",
     borderBottom: "1px solid #e5e7eb",
     background: "#f9fafb",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "0.75rem",
   },
   regionTitle: {
     margin: 0,
     fontSize: "1.125rem",
+  },
+  toggleButton: {
+    padding: "0.25rem 0.75rem",
+    borderRadius: "9999px",
+    border: "1px solid #d1d5db",
+    background: "#fff",
+    color: "#111827",
+    cursor: "pointer",
+    fontSize: "0.75rem",
   },
   regionBody: {
     display: "flex",

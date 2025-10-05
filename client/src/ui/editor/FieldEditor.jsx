@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 function fieldLabel(path, schema) {
   if (schema?.title) return schema.title;
@@ -118,59 +118,132 @@ export function FieldEditor({ schema, value, onChange, path = [], required = fal
   }
 
   if (type === "array") {
-    const arr = Array.isArray(value) ? value : [];
-    const itemsSchema = schema.items || {};
     return (
-      <div style={styles.arrayField}>
-        <div style={styles.arrayHeader}>{label}{required ? " *" : ""}</div>
-        {arr.map((item, idx) => (
-          <div key={idx} style={styles.arrayItem}>
-            <FieldEditor
-              schema={itemsSchema}
-              value={item}
-              onChange={(val) => {
-                const next = [...arr];
-                next[idx] = val;
-                onChange(next);
-              }}
-              path={[...path, String(idx)]}
-              required={true}
-            />
-            <button
-              type="button"
-              onClick={() => {
-                const next = arr.filter((_, i) => i !== idx);
-                onChange(next.length ? next : (required ? [] : undefined));
-              }}
-              style={styles.smallButton}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={() => {
-            const next = [...arr, defaultValueForSchema(itemsSchema)];
-            onChange(next);
-          }}
-          style={styles.smallButton}
-        >
-          Add Item
-        </button>
-      </div>
+      <ArrayField
+        label={label}
+        schema={schema}
+        value={value}
+        onChange={onChange}
+        path={path}
+        required={required}
+      />
     );
   }
 
   if (type === "object") {
-    const props = schema.properties || {};
-    const requiredSet = new Set(schema.required || []);
-    const objVal = value && typeof value === "object" ? value : {};
     return (
-      <div style={styles.objectField}>
-        {label && path.length > 0 && (
-          <div style={styles.objectHeader}>{label}{required ? " *" : ""}</div>
+      <ObjectField
+        label={label}
+        schema={schema}
+        value={value}
+        onChange={onChange}
+        path={path}
+        required={required}
+      />
+    );
+  }
+
+  return null;
+}
+
+function ArrayField({ label, schema, value, onChange, path, required }) {
+  const arr = Array.isArray(value) ? value : [];
+  const itemsSchema = schema.items || {};
+  const [collapsed, setCollapsed] = useState(false);
+
+  const headerStyle = {
+    ...styles.sectionHeader,
+    justifyContent: "space-between",
+  };
+
+  return (
+    <div style={styles.arrayField}>
+      <div style={headerStyle}>
+        <div style={styles.sectionTitle}>
+          {label}
+          {required ? " *" : ""}
+        </div>
+        <button
+          type="button"
+          onClick={() => setCollapsed((prev) => !prev)}
+          style={styles.collapseButton}
+        >
+          {collapsed ? "Expand" : "Collapse"}
+        </button>
+      </div>
+      {!collapsed && (
+        <>
+          {arr.map((item, idx) => (
+            <div key={idx} style={styles.arrayItem}>
+              <FieldEditor
+                schema={itemsSchema}
+                value={item}
+                onChange={(val) => {
+                  const next = [...arr];
+                  next[idx] = val;
+                  onChange(next);
+                }}
+                path={[...path, String(idx)]}
+                required={true}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const next = arr.filter((_, i) => i !== idx);
+                  onChange(next.length ? next : (required ? [] : undefined));
+                }}
+                style={styles.smallButton}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              const next = [...arr, defaultValueForSchema(itemsSchema)];
+              onChange(next);
+            }}
+            style={styles.smallButton}
+          >
+            Add Item
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+function ObjectField({ label, schema, value, onChange, path, required }) {
+  const props = schema.properties || {};
+  const requiredSet = new Set(schema.required || []);
+  const objVal = value && typeof value === "object" ? value : {};
+  const [collapsed, setCollapsed] = useState(false);
+  const hasHeaderLabel = Boolean(label && (path.length > 0 || schema.title));
+
+  return (
+    <div style={styles.objectField}>
+      <div
+        style={{
+          ...styles.sectionHeader,
+          justifyContent: hasHeaderLabel ? "space-between" : "flex-end",
+        }}
+      >
+        {hasHeaderLabel && (
+          <div style={styles.sectionTitle}>
+            {label}
+            {required ? " *" : ""}
+          </div>
         )}
+        <button
+          type="button"
+          onClick={() => setCollapsed((prev) => !prev)}
+          style={styles.collapseButton}
+        >
+          {collapsed ? "Expand" : "Collapse"}
+        </button>
+      </div>
+      {!collapsed && (
         <div style={styles.objectBody}>
           {Object.entries(props).map(([key, propSchema]) => (
             <FieldEditor
@@ -191,11 +264,9 @@ export function FieldEditor({ schema, value, onChange, path = [], required = fal
             />
           ))}
         </div>
-      </div>
-    );
-  }
-
-  return null;
+      )}
+    </div>
+  );
 }
 
 const styles = {
@@ -224,7 +295,12 @@ const styles = {
     borderRadius: "0.75rem",
     background: "#f9fafb",
   },
-  arrayHeader: {
+  sectionHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+  },
+  sectionTitle: {
     fontWeight: 600,
     fontSize: "0.875rem",
   },
@@ -247,6 +323,15 @@ const styles = {
     fontSize: "0.75rem",
     cursor: "pointer",
   },
+  collapseButton: {
+    padding: "0.25rem 0.75rem",
+    borderRadius: "9999px",
+    border: "1px solid #d1d5db",
+    background: "#fff",
+    color: "#111827",
+    cursor: "pointer",
+    fontSize: "0.75rem",
+  },
   objectField: {
     display: "flex",
     flexDirection: "column",
@@ -255,10 +340,6 @@ const styles = {
     border: "1px solid #e5e7eb",
     borderRadius: "0.75rem",
     background: "#f9fafb",
-  },
-  objectHeader: {
-    fontWeight: 600,
-    fontSize: "0.875rem",
   },
   objectBody: {
     display: "flex",
