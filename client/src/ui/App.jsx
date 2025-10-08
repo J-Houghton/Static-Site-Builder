@@ -137,7 +137,7 @@ export default function App() {
       <header style={{ borderBottom: "1px solid #e5e7eb" }}>
         <div
           style={{
-            maxWidth: "72rem",
+            maxWidth: "100rem",
             margin: "0 auto",
             padding: "1rem",
             display: "flex",
@@ -164,11 +164,11 @@ export default function App() {
         </div>
       </header>
 
-      <main style={{ maxWidth: "72rem", margin: "0 auto", padding: "1rem" }}>
+      <main style={{ maxWidth: "100rem", width: "100%", margin: "0 auto", padding: "1rem" }}>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
+            gridTemplateColumns: "1fr 1fr 3fr",
             gap: "1.5rem",
             alignItems: "start",
           }}
